@@ -1,6 +1,7 @@
-// lower_bound 와 upper_bound 의 정의.. 도움
-// ans 갱신 위치, ans 초기값 확인
+package boj.doing
 
+// lower_bound 와 upper_bound 의 정의.. 도움
+// ans 초기값, ans 갱신 위치
 import java.io.*
 import java.util.*
 
@@ -67,25 +68,27 @@ fun solution() {
     println(sb.toString())
 }
 
-// 찾고자 하는 값 이상이 처음 나타나는 위치
+// 정렬되어있는 데이터 집합에서 k값 초과하는 값이 처음 발견되는 위치
+// 정의에 맞게(해석과 동일하게) 식 작성
+// R 초기값 
 fun upper_bound(i: Int, L: Int, R: Int): Int {
     var L = L
     var R = R
-    var ans = R+1
+    var ans = R+1 // ans 가 한번도 갱신이 되지 않았다. 선택된 수가 A의 모든 수보다 크다 -> R+1
 
     while (L <= R) {
         val mid = ((L + R) / 2)
-        if (i >= A[mid]) {
-            L = mid + 1
+        if (A[mid] > i) {
+            ans = mid;
+            R = mid - 1;
         } else {
-            ans = mid
-            R = mid - 1
+            L = mid + 1;
         }
     }
     return ans
 }
 
-// 찾고자 하는 값보다 큰 값이 처음으로 나오는 위치
+// 정렬되어있는 데이터 집합에서 k값 이상이 처음 발견되는 위치
 fun lower_bound(i: Int, L:Int, R: Int): Int {
     var L = L
     var R = R
@@ -93,11 +96,11 @@ fun lower_bound(i: Int, L:Int, R: Int): Int {
 
     while (L <= R) {
         val mid = ((L + R) / 2)
-        if (i > A[mid]) {
-            L = mid + 1
+        if (A[mid] >= i) {
+            ans = mid;
+            R = mid - 1;
         } else {
-            R = mid - 1
-            ans = mid
+            L = mid + 1;
         }
     }
     return ans
