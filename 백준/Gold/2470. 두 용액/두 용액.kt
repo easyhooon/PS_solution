@@ -1,5 +1,4 @@
-package doing
-
+//도움받음
 import java.io.*
 import java.util.*
 import kotlin.math.abs
@@ -16,45 +15,32 @@ internal var v2: Int = 0
 lateinit var A: IntArray
 
 fun main() {
-//    val tc = scan.nextInt()
-//
-//    for(i in 1..tc) {
-//        solve()
-//    }
     solve()
 }
 
 fun solve() {
     input()
 
-    Arrays.sort(A, 0, N)
-
-//    for (i in 0 until N) {
-//        print("${A[i]} ")
-//    }
-//    println()
+    //A에 대해 이분 탐색을 할 예정이니까, 정렬
+    Arrays.sort(A, 1, N+1)
 
     best_sum = Int.MAX_VALUE
 
-    for (left in 0 until N) {
-        val cand = lower_bound(A, left + 1, N - 1, -A[left])
+    for (left in 1..N) {
+        // A[Left] 용액을 쓸 것이다. 고로 -A[left]와 가장 가까운 용액을 자신의 오른쪽 구간에서 찾자.
+        val cand = lower_bound(A, left + 1, N, -A[left])
 
-        // A[cand - 1] 와 A[cand] 중에 A[left] 와 섞었을 때의 정보를 정답에 갱신시킨다.
-//        if (abs(A[cand] + A[left]) < abs(A[cand - 1] + A[left])) {
-//            v1 = A[left]
-//            v2 = A[cand]
-//        } else {
-//            v1 = A[left]
-//            v2 = A[cand - 1]
-//        }
+        // A[candidate -1] 와 A[candidate] 중에 A[left]와 섞었을 때의 정보를 정답에 갱신시킨다.
 
-        if(left + 1 <= cand - 1 && cand -1 <= N-1 && abs(A[cand-1] + A[left]) < best_sum) {
+        //1. A[left] + A[candidate - 1]
+        if(left + 1 <= cand - 1 && cand -1 <= N && abs(A[cand-1] + A[left]) < best_sum) {
             best_sum = abs(A[cand-1]+A[left])
             v1 = A[left]
             v2 = A[cand - 1]
         }
 
-        if(left + 1 <= cand && cand <= N-1 && abs(A[cand] + A[left]) < best_sum) {
+        //2. A[left] + A[candidate]
+        if(left + 1 <= cand && cand <= N && abs(A[cand] + A[left]) < best_sum) {
             best_sum = abs(A[cand]+A[left])
             v1 = A[left]
             v2 = A[cand]
@@ -68,42 +54,21 @@ fun solve() {
 fun input() {
     N = scan.nextInt()
 
-    // 0 이 초기값으로 들어가는 관계로 0 ~ N-1로 range 를 잡아야
     A = IntArray(N + 1)
 
-    for (i in 0 until N) {
+    for (i in 1..N) {
         A[i] = scan.nextInt()
     }
-
 }
-
-// 직접 배열을 손으로 써보며 이해
-//fun lower_bound(A: IntArray, L: Int, R: Int, X: Int): Int {
-//    // A[L...R] 에서 X 미만의 수 중 제일 오른쪽 인덱스를 return 하는 함수
-//    // 그런 게 없다면 L - 1 을 return 한다
-//    var L = L
-//    var R = R
-//    var res = L - 1 // 만약 A[L...R] 중 X 이하의 수가 없다면 L - 1 을 return 한다.
-//    while (L <= R) {
-//        val mid = (L + R) / 2
-//        if (A[mid] < X) {
-//            // mid 아래는 어차피 다 x보다 작음 -> L 을 땡겨와야 함
-//            res = mid
-//            L = mid + 1
-//        } else {
-//            // mid 보다 큰 건 어차피 다 x보다 큼 -> R 을 땡겨와야 함
-//            R = mid - 1
-//        }
-//    }
-//    return res
-//}
 
 fun lower_bound(A: IntArray, L: Int, R: Int, X: Int): Int {
     // A[L...R] 에서 X 이상의 수 중 제일 왼쪽 인덱스를 return 하는 함수
-    // 그런 게 없다면 L - 1 을 return 한다
+    // 만약 A[L...R] 중 X 이하의 수가 없다면 R + 1 을 return 한다.
+    // res 의 초기값은 R + 1
     var L = L
     var R = R
-    var res = R + 1 // 만약 A[L...R] 중 X 이하의 수가 없다면 R + 1 을 return 한다.
+    var res = R + 1
+
     while (L <= R) {
         val mid = (L + R) / 2
         if (A[mid] >= X) {
