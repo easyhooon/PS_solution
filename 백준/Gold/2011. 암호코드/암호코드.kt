@@ -15,7 +15,7 @@ fun main() {
 }
 
 fun input() {
-    str = scan.next()
+    str = scan.nextLine()
     N = str.length
 
 }
