@@ -4,7 +4,7 @@
 
 ### 성능 요약
 
-메모리: 107144 KB, 시간: 764 ms
+메모리: 123812 KB, 시간: 736 ms
 
 ### 분류
 
@@ -32,7 +32,7 @@
 
 <p style="text-align: center;"><그림 3> 상승 비행의 이동 경로</p>
 
-<p style="text-align: center;"><img alt="" src="" style="height: 203px; width: 650px;"></p>
+<p style="text-align: center;"><img alt="" src="https://upload.acmicpc.net/c2108165-cc33-4c13-9231-988ee14ecd2e/-/crop/1642x512/152,461/-/preview/" style="height: 203px; width: 650px;"></p>
 
 <p style="text-align: center;"><그림 4> 하강 비행의 이동 경로</p>
 

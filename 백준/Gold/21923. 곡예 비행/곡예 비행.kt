@@ -1,21 +1,21 @@
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.lang.Math.max
+import java.lang.StringBuilder
 import java.util.*
 
 var n = 0
 var m = 0
 
-lateinit var board: Array<IntArray>
-lateinit var dyA: Array<IntArray>
-lateinit var dyB: Array<IntArray>
+lateinit var a: Array<IntArray>
+lateinit var dy: Array<Array<IntArray>>
 
 val br = BufferedReader(InputStreamReader(System.`in`))
+val sb = StringBuilder()
 
-var dirAx = intArrayOf(-1, 0)
-var dirAy = intArrayOf(0, 1)
-var dirBx = intArrayOf(-1, 0)
-var dirBy = intArrayOf(0, -1)
+const val UP = 0
+const val DOWN = 1
+const val INF = 987654321
 
 
 fun main() {
@@ -28,20 +28,18 @@ fun input() {
     n = st.nextToken().toInt()
     m = st.nextToken().toInt()
 
-    //python 처럼 입력받기
-    //val (n, m) = br.readLine().split(' ').map { it.toInt() }
+//    //python 처럼 입력받기
+//    val (n, m) = br.readLine().split(' ').map { it.toInt() }
 
-    //println("$n $m")
+//    println("$n $m")
 
-    board = Array(n + 1) { IntArray(m + 1) }
-    dyA = Array(n + 1) { IntArray(m + 1) }
-    dyB = Array(n + 1) { IntArray(m + 1) }
-
+    a = Array(n + 1) { IntArray(m + 1) }
+    dy = Array(n + 1) { Array(m + 1) { IntArray(2) } }
 
     for (i in 1..n) {
         st = StringTokenizer(br.readLine())
         for (j in 1..m) {
-            board[i][j] = st.nextToken().toInt()
+            a[i][j] = st.nextToken().toInt()
         }
     }
 //    for (i in 1..n) {
@@ -53,7 +51,7 @@ fun input() {
 
 //    for (i in 1..n) {
 //        for (j in 1..m) {
-//            print("${board[i][j]} ")
+//            print("${a[i][j]} ")
 //        }
 //        println()
 //    }
@@ -62,58 +60,43 @@ fun input() {
 fun pro() {
     for (i in 1..n) {
         for (j in 1..m) {
-            dyA[i][j] = -987654321
-            dyB[i][j] = -987654321
+            dy[i][j][UP] = -987654321
+            dy[i][j][DOWN] = -987654321
         }
     }
 
-    dyA[n][1] = board[n][1]
-    for (j in 1..m) {
-        for (i in n downTo 1) {
-            for (k in 0 until 2) {
-                val ni = i + dirAx[k]
-                val nj = j + dirAy[k]
-                if (ni in 1..n && nj in 1..m) {
-                    dyA[ni][nj] = max(dyA[ni][nj], dyA[i][j] + board[ni][nj])
-                }
-            }
-        }
-    }
+    dy[n][1][UP] = a[n][1]
 
-//    for (i in 1..n) {
-//        for (j in 1..m) {
-//            print("${dyA[i][j]} ")
+    sb.append(solve(n, m, DOWN))
+
+    print(sb.toString())
+
+//    for(i in 1..n) {
+//        for(j in 1..m) {
+//            print("${dy[i][j][UP]} ")
 //        }
 //        println()
 //    }
 
-
-    dyB[n][m] = board[n][m]
-    for (j in m downTo 1) {
-        for (i in n downTo 1) {
-            for (k in 0 until 2) {
-                val ni = i + dirBx[k]
-                val nj = j + dirBy[k]
-                if (ni in 1..n && nj in 1..m) {
-                    dyB[ni][nj] = max(dyB[ni][nj], dyB[i][j] + board[ni][nj])
-                }
-            }
-
-        }
-    }
-
-//    for (i in 1..n) {
-//        for (j in 1..m) {
-//            print("${dyB[i][j]} ")
+//    for(i in 1..n) {
+//        for(j in 1..m) {
+//            print("${dy[i][j][DOWN]} ")
 //        }
 //        println()
 //    }
+}
 
-    var ans = -987654321
-    for (i in 1..n) {
-        for (j in 1..m) {
-            ans = max(ans, dyA[i][j] + dyB[i][j])
-        }
+// 이러한 코드 형식이 c++의 형식이라.. 다른 형식으로 변환해주어야함
+fun solve(i: Int, j: Int, dir: Int): Int {
+    if (i < 1 || i > n || j < 1 || j > m) return -INF;
+    if (dy[i][j][dir] != -INF) return dy[i][j][dir];
+
+    if (dir == UP) {
+        dy[i][j][dir] = max(solve(i + 1, j, dir), solve(i, j - 1, dir)) + a[i][j];
     }
-    println(ans)
+    else {
+        dy[i][j][dir] = max(solve(i - 1, j, dir), solve(i, j - 1, dir)) + a[i][j];
+        dy[i][j][dir] = max(dy[i][j][dir], solve(i, j, UP) + a[i][j]);
+    }
+    return dy[i][j][dir]
 }
