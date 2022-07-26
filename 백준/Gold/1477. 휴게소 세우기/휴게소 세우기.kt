@@ -29,10 +29,8 @@ fun input() {
 
     //python 처럼 입력받기
     //val (N, M, length) = br.readLine().split(' ').map { it.toInt() }
-
     v = IntArray(N + 2)
 
-    v[0] = 0
     st = StringTokenizer(br.readLine())
 
     for (i in 1 until N + 1) {
@@ -48,7 +46,6 @@ fun solve() {
     val answer = binarySearch()
 
     sb.append(answer).append("\n")
-
     print(sb.toString())
 }
 
@@ -57,30 +54,39 @@ fun binarySearch(): Int {
     var right = length - 1
     while (left <= right) {
         val mid = (left + right) / 2
-
         // 현재 middle 초과하여 거리 차이가 가능하면, 더 큰 최대값 찾기
         if (determination(mid)) {
-            //ans = mid
-            left = mid + 1
-        } else {
+            ans = mid
+            //left = mid + 1
             right = mid - 1
+        } else {
+            //right = mid - 1
+            left = mid + 1
         }
     }
-    //return ans
-    return left
+    return ans
+    //return left
 }
 
 fun determination(distance: Int): Boolean {
     var cnt = 0
     for (i in 0 until N + 1) {
         val d = v[i + 1] - v[i]
-        var temp = 0
+        var temp: Int
         if (d / distance > 0) {
             // 휴게소간의 거리가 새로 설치한 distance 로 나누었을때 딱 나눠떨어지면,
             // 나눈값에 -1개 한 수만큼 설치가 가능하다.
-            if (d % distance == 0) temp = d / distance - 1 else temp = d / distance
+            if (d % distance == 0) {
+                temp = d / distance - 1
+            } else {
+                temp = d / distance
+            }
             cnt += temp
         }
     }
-    return cnt > M
+
+    // 휴게소를 M 개 보다 더 많이 세울 수 있을 경우
+    // 휴게소를 M 개 이상 세울 수 있는 경우
+    return cnt <= M
+    //return cnt > M
 }
