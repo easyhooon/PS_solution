@@ -21,4 +21,3 @@ arr.sort()
 
 sum_val = 0
 solution()
-
