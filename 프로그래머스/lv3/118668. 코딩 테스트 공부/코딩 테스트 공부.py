@@ -58,18 +58,13 @@ def solution(alp, cop, problems):
                 dp[i][j + 1] = min(dp[i][j + 1], dp[i][j] + 1)
 
             for (alp_req, cop_req, alp_rwd, cop_rwd, cost) in problems:
-                # 틀린 코드
                 # 풀 수 있는 문제에 대해서
-                # if i >= alp_req and j >= cop_req and i + alp_rwd <= max_alp and j + cop_rwd <= max_cop:
-                #     dp[i + alp_rwd][j + cop_rwd] = min(dp[i + alp_rwd][j + cop_rwd], dp[i][j] + cost)
+                if i >= alp_req and j >= cop_req and i + alp_rwd <= max_alp and j + cop_rwd <= max_cop:
+                    dp[i + alp_rwd][j + cop_rwd] = min(dp[i + alp_rwd][j + cop_rwd], dp[i][j] + cost)
 
-                if i >= alp_req and j >= cop_req:
-                    # 어쨌든 최소 충족조건을 만족한 것이기 때문에 (정확히 맞추는거보다 이렇게 맞추는게 더 최단 시간이 나올수도 있고)
-                    next_alp, next_cop = min(max_alp, i + alp_rwd), min(max_cop, j + cop_rwd)
-                    dp[next_alp][next_cop] = min(dp[next_alp][next_cop], dp[i][j] + cost)
+                # if i >= alp_req and j >= cop_req:
+                #     next_alp, next_cop = min(max_alp, i + alp_rwd), min(max_cop, j + cop_rwd)
+                #     dp[next_alp][next_cop] = min(dp[next_alp][next_cop], dp[i][j] + cost)
 
     answer = dp[max_alp][max_cop]
     return answer
-
-
-print(solution(0, 0, [[0, 0, 30, 2, 1], [150, 150, 30, 30, 100]]))
