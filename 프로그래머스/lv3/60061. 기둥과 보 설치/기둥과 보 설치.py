@@ -12,20 +12,25 @@ def solution(n, build_frame):
 
             # 바닥에 있지 않은 경우
             else:
-                temp = [x, y - 1, 0]  # 해당 지점 밑에 기둥이 있는 경우
-                temp2 = [x - 1, y, 1]  # 해당 지점 밑 왼쪽에 보가 있는 경우
-                temp3 = [x, y, 1]  # 해당 지점 밑 오른쪽에 보가 있는 경우
+                # 해당 지점 밑에 기둥이 있는 경우
+                temp = [x, y - 1, 0]
+                # 해당 지점 밑 왼쪽에 보가 있는 경우
+                temp2 = [x - 1, y, 1]
+                # 해당 지점 밑 오른쪽에 보가 있는 경우
+                temp3 = [x, y, 1]  
 
                 if temp in answer or temp2 in answer or temp3 in answer:
                     answer.append([x, y, a])
         # 보 설치
         elif b == 1 and a == 1:
-            temp = [x, y - 1, 0]  # 왼쪽 아래 기둥 설치
-            temp2 = [x + 1, y - 1, 0]  # 오른쪽 아래 기둥 설치
-            temp3 = [x - 1, y, 1]  # 왼쪽에 보 설치
-            temp4 = [x + 1, y, 1]  # 오른쪽 보 설치
-
-            # print(temp, temp2, temp3, temp4, answer)
+            # 왼쪽 아래 기둥 설치
+            temp = [x, y - 1, 0]
+            # 오른쪽 아래 기둥 설치
+            temp2 = [x + 1, y - 1, 0]
+            # 왼쪽에 보 설치
+            temp3 = [x - 1, y, 1]
+            # 오른쪽 보 설치
+            temp4 = [x + 1, y, 1]  
 
             if (temp in answer) or (temp2 in answer) or (temp3 in answer and temp4 in answer):
                 answer.append([x, y, a])
@@ -46,7 +51,7 @@ def solution(n, build_frame):
 
             # 왼쪽 위 보가 있다면
             if [x - 1, y + 1, 1] in answer:
-                # 다른쪽 기둥이 버티고 있지 않거나 양쪽 보가 연결되어 있지 않다면
+                # 다른쪽 기둥이 버티고 있지 않거나 양쪽 보가 연결 되어 있지 않다면
                 if [x - 1, y, 0] not in answer and ([x, y + 1, 1] not in answer or [x - 2, y + 1, 1] not in answer):
                     continue
 
