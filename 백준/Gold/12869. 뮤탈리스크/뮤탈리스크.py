@@ -11,7 +11,7 @@ while len(scv) < 3:
 
 scv.sort(reverse=True)
 
-dp = [[[0] * 61 for _ in range(61)] for __ in range(61)]
+dp = [[[0] * 61 for _ in range(61)] for _ in range(61)]
 
 
 def solve(i, j, k):
