@@ -1,26 +1,22 @@
+# 역방향 풀이 
+
 import sys
-from pprint import pprint
 
-n = int(sys.stdin.readline().rstrip())
+si = sys.stdin.readline
 
-board = [[0 for i in range(3)] for j in range(n+1)]
-dp = [[0 for i in range(3)] for j in range(n+1)]
+n = int(si())
 
-for i in range(1, n+1):
-    k = list(map(int, input().split()))
+board = [list(map(int, si().split())) for _ in range(n)]
+dp = [[0] * 3 for _ in range(n)]
+
+# 기저 조건
+dp[n - 1][0] = board[n - 1][0]
+dp[n - 1][1] = board[n - 1][1]
+dp[n - 1][2] = board[n - 1][2]
+
+# 역방향으로 dp 배열 채우기
+for i in range(n - 2, -1, -1):
     for j in range(0, 3):
-        board[i][j] = k[j]
-# pprint(board)
+        dp[i][j] = min(dp[i + 1][(j + 1) % 3], dp[i + 1][(j + 2) % 3]) + board[i][j]
 
-#처음 선택에 따라 케이스를 3가지로 나눠야함
-dp[n][0] = board[n][0]
-dp[n][1] = board[n][1]
-dp[n][2] = board[n][2]
-
-for i in range(n-1, 0, -1):
-    for j in range(0, 3):
-        dp[i][j] = min(dp[i+1][(j+1)%3], dp[i+1][(j+2)%3]) + board[i][j]
-
-# pprint(dp)
-print(min(dp[1][0], dp[1][1], dp[1][2]))
-
+print(min(dp[0][0], dp[0][1], dp[0][2]))
