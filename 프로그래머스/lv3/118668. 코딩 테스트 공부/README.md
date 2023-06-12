@@ -1,10 +1,10 @@
 # [level 3] 코딩 테스트 공부 - 118668 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/118668?language=kotlin) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/118668?language=python3) 
 
 ### 성능 요약
 
-메모리: 60.3 MB, 시간: 21.75 ms
+메모리: 10.5 MB, 시간: 4.72 ms
 
 ### 구분
 
