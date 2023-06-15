@@ -10,22 +10,6 @@ def check(candidates, place):
             for y in range(sy, ey + 1):
                 if place[x][y] == 'O':
                     return False
-
-        for x in range(ex, sx + 1):
-            for y in range(sy, ey + 1):
-                if place[x][y] == 'O':
-                    return False
-
-        for x in range(sx, ex + 1):
-            for y in range(ey, sy + 1):
-                if place[x][y] == 'O':
-                    return False
-
-        for x in range(ex, sx + 1):
-            for y in range(ey, sy + 1):
-                if place[x][y] == 'O':
-                    return False
-
     return True
 
 
@@ -40,16 +24,17 @@ def is_possible(people, place):
                 if dist <= 1:
                     answer.append(0)
                     return
-                # 맨해튼 거리가 2, 거리 두기 조건을 위반할 수 있는 후보
+                # 맨해튼 거리가 2, 거리 두기 조건에 걸릴 수 있는 후보
                 else:
                     sx = people[i][0]
                     sy = people[i][1]
                     ex = people[j][0]
                     ey = people[j][1]
 
-                    candidates.append((sx, sy, ex, ey))
+                    if sx <= ex and sy <= ey:
+                        candidates.append((sx, sy, ex, ey))
 
-    # print(candidates)
+    print(candidates)
     if check(candidates, place):
         answer.append(1)
     else:
@@ -70,4 +55,3 @@ def solution(places):
 
 
 # print(solution([["POOOP", "OXXOX", "OPXPX", "OOXOX", "POXXP"], ["POOPX", "OXPXP", "PXXXO", "OXXXO", "OOOPP"], ["PXOPX", "OXOXP", "OXPOX", "OXXOP", "PXPOX"], ["OOOXX", "XOOOX", "OOOXX", "OXOOX", "OOOOO"], ["PXPXP", "XPXPX", "PXPXP", "XPXPX", "PXPXP"]]))
-# print(solution([["OOPOO", "OPOOO", "OOOOO", "OOOOO", "OOOOO"]]))
