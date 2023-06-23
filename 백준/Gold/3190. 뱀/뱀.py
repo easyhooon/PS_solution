@@ -18,6 +18,7 @@ k = int(si())
 board = [[0 for _ in range(101)] for _ in range(101)]
 cmd = [0] * 10011
 
+# 뱀이 이동한 경로를 시간 순서대로 저장
 snake_x = [0] * 10011
 snake_y = [0] * 10011
 
@@ -38,6 +39,8 @@ time = 0
 dir = 3
 
 # 처음 위치 초기화
+# tail_index 이 배열에서 뱀의 꼬리가 위치한 인덱스,
+# 즉 뱀이 이동한 경로 중에서 가장 오래된 위치를 가리킴
 head_x, head_y, tail_index = 1, 1, time
 #
 snake_x[time], snake_y[time] = head_x, head_y
@@ -56,16 +59,19 @@ while True:
     if (head_x < 1 or head_x > n or head_y < 1 or head_y > n) or board[head_x][head_y] == -1:
         break
 
+    # 머리 위치 갱신
     snake_x[time] = head_x
     snake_y[time] = head_y
 
     # 진행
     if board[head_x][head_y] == 0:
+        # 뱀의 현재 꼬리 위치 가져오기
         tail_x = snake_x[tail_index]
         tail_y = snake_y[tail_index]
 
-        # 꼬리 좌표 제거
+        # 이전에 위치했던 꼬리 좌표 뱀 몸통에서 제거
         board[tail_x][tail_y] = 0
+        # 꼬리 위치 갱신
         tail_index += 1
 
     # 뱀의 머리 좌표 진행
