@@ -44,7 +44,7 @@ for _ in range(n):
         length = temp_list[length_index]
 
         node[parent].append((child, length))
-        node[child].append((parent, length))
+        # node[child].append((parent, length))
 
 
 # print(node)
