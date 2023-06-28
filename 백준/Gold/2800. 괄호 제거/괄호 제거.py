@@ -23,13 +23,13 @@ for i in range(n):
         pair_list.append((j, i))
 
 # print(pair_list)
-pair_list.sort()
+# pair_list.sort()
 # print(pair_list)
 m = len(pair_list)
 
 # 출력이 까다롭다
 
-# 괄호를 한개도 안 고른거는 출력 x
+# 괄호를 한개도 안 고른거는 출력 x 
 # 중복되는거 한번씩만 출력
 answer = []
 
