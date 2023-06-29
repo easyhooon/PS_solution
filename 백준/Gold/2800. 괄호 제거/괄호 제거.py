@@ -51,7 +51,9 @@ for i in range(1, m + 1):
             exp_visited[elem[j][0]] = False
             exp_visited[elem[j][1]] = False
 
+# 중복 제거
 answer = list(set(answer))
+# 사전순 정렬 
 answer.sort()
 for elem in answer:
     print(elem)
