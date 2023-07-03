@@ -15,7 +15,7 @@ max_honey_sum = -sys.maxsize
 # 왼쪽 부터 누적합
 prefix_arr_left = [0] * (n + 2)
 # 오른쪽부터 누적합
-prefix_arr_right = [0] * (n + 2)
+# prefix_arr_right = [0] * (n + 2)
 
 # 벌의 위치는 서로 다름, 벌통도
 # 꿀은 무조건 오른쪽 끝에 있는게 합을 크게 만들 수 있다.(꿀 위치 고정)
@@ -48,8 +48,8 @@ prefix_arr_right = [0] * (n + 2)
 for i in range(1, n + 1):
     prefix_arr_left[i] = prefix_arr_left[i - 1] + arr[i]
 
-for i in range(n, 0, - 1):
-    prefix_arr_right[i] = prefix_arr_right[i + 1] + arr[i]
+# for i in range(n, 0, - 1):
+#     prefix_arr_right[i] = prefix_arr_right[i + 1] + arr[i]
 
 # print(prefix_arr_left)
 # print(prefix_arr_right)
@@ -66,16 +66,22 @@ for i in range(n, 0, - 1):
 # 벌1, 벌2, 꿀통
 for i in range(2, n):
     max_honey_sum = max(max_honey_sum,
-                        prefix_arr_left[n] - prefix_arr_left[1] + prefix_arr_left[n] - prefix_arr_left[i] - arr[i])
+                        (prefix_arr_left[n] - prefix_arr_left[1] - arr[i]) + (prefix_arr_left[n] - prefix_arr_left[i]))
 
 # 꿀통 벌1, 벌2
-for i in range(n - 1, 1, - 1):
-    max_honey_sum = max(max_honey_sum,
-                        prefix_arr_right[1] - prefix_arr_right[n] + prefix_arr_right[1] - prefix_arr_right[i] - arr[i])
+# for i in range(n - 1, 1, - 1):
+#     max_honey_sum = max(max_honey_sum,
+#                         (prefix_arr_right[1] - prefix_arr_right[n] - arr[i]) + (prefix_arr_right[1] - prefix_arr_right[i]))
+
+for i in range(2, n):
+    max_honey_sum = max(max_honey_sum, prefix_arr_left[i - 1] + prefix_arr_left[n - 1] - arr[i])
 
 # 벌1 꿀통 벌2
 for i in range(2, n):
+    # max_honey_sum = max(max_honey_sum,
+    #                     (prefix_arr_left[i] - arr[1]) + (prefix_arr_right[i] - arr[n]))
     max_honey_sum = max(max_honey_sum,
-                        prefix_arr_left[i] - arr[1] + prefix_arr_right[i] - arr[n])
+                        (prefix_arr_left[i] - arr[1]) + (prefix_arr_left[n - 1] - prefix_arr_left[i - 1]))
+
 
 print(max_honey_sum)
