@@ -1,11 +1,11 @@
 # binary 라는 이진수의 L번지 부터 R번지 까지가 올바르게 포화 이진트리로 표현되느냐?
-def solve(binary: str, L: int, R: int) -> bool:   
+def solve(binary, L, R):
     if L == R:
         return True
-    
+
     mid = (L + R) // 2
     root = binary[mid]
-    
+
     left_child = binary[(L + (mid - 1)) // 2]
     right_child = binary[((mid + 1) + R) // 2]
 
@@ -20,7 +20,7 @@ def solve(binary: str, L: int, R: int) -> bool:
 
 def solution(numbers):
     answer = []
-    
+
     for elem in numbers:
         binary = bin(elem)[2:]
         tree_size = 1
@@ -34,6 +34,5 @@ def solution(numbers):
             answer.append(1)
         else:
             answer.append(0)
-        
-    return answer 
-    
+
+    return answer
