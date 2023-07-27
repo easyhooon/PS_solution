@@ -1,3 +1,9 @@
+# 최소 비용 구하기 2
+
+# 최소 비용
+# 최소 비용을 갖는 경로에 포함되어있는 도시의 개수(출발, 도착 도시 포함
+# 경로를 방문하는 도시 순서대로 출력
+
 import sys
 import heapq
 
@@ -10,17 +16,16 @@ def dijkstra(start, dist, edges):
     dist[start] = 0
 
     while pq:
-        current_dist, idx = heapq.heappop(pq)
+        min_dist, min_idx = heapq.heappop(pq)
 
-        if dist[idx] != current_dist:
+        if dist[min_idx] != min_dist:
             continue
 
-        for to, weight in edges[idx]:
-            if current_dist + weight >= dist[to]:
-                continue
-
-            dist[to] = current_dist + weight
-            heapq.heappush(pq, (dist[to], to))
+        for target_idx, target_dist in edges[min_idx]:
+            new_dist = dist[min_idx] + target_dist
+            if dist[target_idx] > new_dist:
+                dist[target_idx] = new_dist
+                heapq.heappush(pq, (new_dist, target_idx))
 
     return dist
 
