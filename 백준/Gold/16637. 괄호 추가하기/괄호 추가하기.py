@@ -29,19 +29,6 @@ def choose(cnt, num, op):
 
     choose(cnt + 1, num[:], op[:])
 
-    # if len(num) > cnt + 2:
-    #     n1, n2 = num.pop(cnt), num.pop(cnt)
-    #     oper = op.pop(cnt)
-    #
-    #     if oper == '+':
-    #         num.insert(cnt, n1 + n2)
-    #     elif oper == '-':
-    #         num.insert(cnt, n1 - n2)
-    #     elif oper == '*':
-    #         num.insert(cnt, n1 * n2)
-    #
-    #     choose(cnt + 1, num, op)
-
     try:
         n1, n2 = num.pop(cnt), num.pop(cnt)
         oper = op.pop(cnt)
