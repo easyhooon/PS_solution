@@ -15,6 +15,8 @@ filled = [False] * 12
 
 
 def get_val(ch):
+    if ch == 'x':
+        return 0
     return ord(ch) - ord('A') + 1
 
 
